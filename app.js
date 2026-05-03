@@ -425,45 +425,47 @@ function updateSolidBounds(obj) {
     // ======================================================
     let lastTime = performance.now();
 
-    function animate() {
-        requestAnimationFrame(animate);
+function animate() {
+    requestAnimationFrame(animate);
 
-        if (!GameState.running) {
-            renderer.render(scene, camera);
-            return;
-        }
-
-        estimatedPlayerVelocity.copy(playerPos).sub(lastPlayerPos);
-        lastPlayerPos.copy(playerPos);
-
-        if (window.Zombies && Zombies.list.length === 0) {
-            GameOverlay.showWin();
-            return;
-        }
-
-        if (playerHealth <= 0) {
-            GameOverlay.showGameOver();
-            return;
-        }
-
-        updateMovement();
-        updateCamera();
-
-        const now = performance.now();
-        const deltaTime = (now - lastTime) / 1000;
-        lastTime = now;
-
-        const hitObject = getCrosshairHitObject();
-        updateMainDoorAnimation(deltaTime);
-
-        if (window.Weapons) Weapons.update();
-        if (window.Zombies) Zombies.updateAll(playerPos, estimatedPlayerVelocity);
-
-        if (healthEl) healthEl.innerText = "Health: " + playerHealth;
-
+    if (!GameState.running) {
         renderer.render(scene, camera);
+        return;
     }
 
+    const now = performance.now();
+    const deltaTime = (now - lastTime) / 1000;
+    lastTime = now;
+
+    estimatedPlayerVelocity.copy(playerPos).sub(lastPlayerPos);
+    lastPlayerPos.copy(playerPos);
+
+    if (window.Zombies && Zombies.list.length === 0) {
+        GameOverlay.showWin();
+        return;
+    }
+    if (playerHealth <= 0) {
+        GameOverlay.showGameOver();
+        return;
+    }
+
+    updateMovement(deltaTime);
+    updateCamera(deltaTime);
+
+    if (typeof updateDayNightCycle === "function") {
+        updateDayNightCycle(deltaTime);
+    }
+
+    updateElevator(deltaTime);
+    updateMainDoorAnimation(deltaTime);
+
+    if (window.Weapons) Weapons.update(deltaTime);
+    if (window.Zombies) Zombies.updateAll(playerPos, estimatedPlayerVelocity, deltaTime);
+
+    if (healthEl) healthEl.innerText = "Health: " + playerHealth;
+
+    renderer.render(scene, camera);
+}
     animate();
 
     window.addEventListener("resize", () => {
