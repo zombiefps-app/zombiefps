@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>FPS Engine</title>
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: black;
+    }
+
+    canvas {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      cursor: crosshair;
+    }
+
+    #hitmarker {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 30px;
+      height: 30px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      font-size: 40px;
+      color: white;
+      text-shadow: 0 0 10px black;
+      user-select: none;
+    }
+
+    #ammo {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 28px;
+      color: white;
+      text-shadow: 0 0 10px black;
+      font-family: Arial, sans-serif;
+      user-select: none;
+    }
+
+    #health {
+      position: fixed;
+      bottom: 60px;
+      left: 20px;
+      font-size: 28px;
+      color: red;
+      text-shadow: 0 0 10px black;
+      font-family: Arial, sans-serif;
+      user-select: none;
+    }
+
+    /* 🔥 NEW: Grenade UI */
+    #grenades {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      font-size: 28px;
+      color: yellow;
+      text-shadow: 0 0 10px black;
+      font-family: Arial, sans-serif;
+      user-select: none;
+    }
+
+    #crosshair {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 6px;
+      height: 6px;
+      background: red;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 10;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ========================= -->
+<!-- START PANEL -->
+<!-- ========================= -->
+<div id="start-panel" style="
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: Arial;
+  z-index: 9999;
+">
+  <h1>Zombie FPS</h1>
+
+  <button id="btn-zombies">Zombies: <span id="val-zombies">20</span></button>
+  <button id="btn-speed">Zombie Speed: <span id="val-speed">2x</span></button>
+  <button id="btn-weapon">Weapon: <span id="val-weapon">AK‑47</span></button>
+  <button id="btn-health">Player Health: <span id="val-health">200</span></button>
+  <button id="btn-ammo">Max Ammo: <span id="val-ammo">120</span></button>
+
+  <!-- 🔥 Difficulty Selector -->
+  <button id="btn-difficulty">Difficulty: <span id="val-difficulty">NORMAL</span></button>
+
+  <button id="btn-start" style="margin-top:20px; padding:10px 20px;">
+    START GAME
+  </button>
+</div>
+
+<!-- ========================= -->
+<!-- GAME OVER PANEL -->
+<!-- ========================= -->
+<div id="game-over-panel" style="
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: Arial;
+  z-index: 9999;
+">
+  <h1>GAME OVER</h1>
+  <button id="btn-restart" style="margin-top:20px; padding:10px 20px;">
+    BACK TO START
+  </button>
+</div>
+
+<!-- ========================= -->
+<!-- WIN PANEL -->
+<!-- ========================= -->
+<div id="win-panel" style="
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: Arial;
+  z-index: 9999;
+">
+  <h1>YOU WIN!</h1>
+  <button id="btn-win-restart" style="margin-top:20px; padding:10px 20px;">
+    BACK TO START
+  </button>
+</div>
+
+<!-- ========================= -->
+<!-- GAME CANVAS + UI -->
+<!-- ========================= -->
+<canvas id="scene"></canvas>
+
+<div id="hitmarker">✕</div>
+<div id="ammo">30 / 120</div>
+<div id="health">Health: 100</div>
+
+<!-- 🔥 NEW: Grenade Counter -->
+<div id="grenades">Grenades: 20</div>
+
+<div id="crosshair"></div>
+
+<!-- ========================= -->
+<!-- SCRIPT ORDER (CRITICAL) -->
+<!-- ========================= -->
+<script src="three.min.js"></script>
+
+<script src="collision.js"></script>
+<script src="game-overlay.js"></script>
+<script src="sounds.js"></script>
+<script src="map.js"></script>
+<script src="skyscraper-map.js"></script>
+
+<script src="zombies-difficulty.js"></script>
+
+<!-- 🔥 Grenade weapon MUST load BEFORE weapons.js -->
+<script src="grenade.js"></script>
+
+<script src="weapons.js"></script>
+<script src="zombies.js"></script>
+
+<script src="app.js"></script>
+
+</body>
+</html>
