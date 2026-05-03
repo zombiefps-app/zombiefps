@@ -47,7 +47,7 @@ window.Sounds = {
   playZombieStep() { this.play("zombieStep"); },
   playZombieHit()  { this.play("zombieHit"); },
 
-  // 🔥 NEW: Player hit sound
+  // Player hit sound
   playPlayerHit()  { this.play("playerHit"); },
 
   startAmbient() {
