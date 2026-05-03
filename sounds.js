@@ -12,7 +12,7 @@ window.Sounds = {
       footstep:     "sounds/footstep.mp3",
       zombieStep:   "sounds/zombie_step.mp3",
       zombieHit:    "sounds/zombie_hit.mp3",
-      playerHit:    "sounds/player_hit.mp3",   // 🔥 NEW SOUND
+      playerHit:    "sounds/player_hit.mp3", 
       ambient:      "sounds/ambient_loop.mp3"
     };
 
